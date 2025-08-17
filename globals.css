@@ -1,0 +1,194 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom educational theme */
+:root {
+  --foreground-rgb: 34, 40, 49;
+  --background-start-rgb: 247, 240, 235; /* New light background start color */
+  --background-end-rgb: 255, 255, 255;
+  --primary-color-start: 102, 126, 234;
+  --primary-color-end: 118, 75, 162;
+  --flashcard-front-start: 79, 172, 254;
+  --flashcard-front-end: 0, 242, 254;
+  --flashcard-back-start: 67, 233, 123;
+  --flashcard-back-end: 56, 249, 215;
+  --correct-color-start: 79, 172, 254;
+  --correct-color-end: 0, 242, 254;
+  --incorrect-color-start: 250, 112, 154;
+  --incorrect-color-end: 254, 225, 64;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 236, 236, 236;
+    --background-start-rgb: 2, 12, 20; /* New dark background start color */
+    --background-end-rgb: 10, 22, 30; /* New dark background end color */
+    --primary-color-start: 118, 75, 162;
+    --primary-color-end: 102, 126, 234;
+    --flashcard-front-start: 0, 156, 170;
+    --flashcard-front-end: 0, 175, 207;
+    --flashcard-back-start: 67, 233, 123;
+    --flashcard-back-end: 56, 249, 215;
+    --correct-color-start: 0, 175, 207;
+    --correct-color-end: 0, 156, 170;
+    --incorrect-color-start: 250, 112, 154;
+    --incorrect-color-end: 254, 225, 64;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  min-height: 100vh;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.learn-gradient {
+  background: linear-gradient(135deg, rgb(var(--primary-color-start)) 0%, rgb(var(--primary-color-end)) 100%);
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, rgb(var(--primary-color-start)), rgb(var(--primary-color-end)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+/* Flashcard */
+.flashcard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.flashcard {
+  width: 300px;
+  height: 200px;
+  perspective: 1000px;
+  margin: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.flashcard:hover {
+  transform: scale(1.05);
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flashcard.flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+
+.flashcard-front, .flashcard-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.flashcard-front {
+  background: linear-gradient(135deg, rgb(var(--flashcard-front-start)) 0%, rgb(var(--flashcard-front-end)) 100%);
+  color: white;
+}
+
+.flashcard-back {
+  background: linear-gradient(135deg, rgb(var(--flashcard-back-start)) 0%, rgb(var(--flashcard-back-end)) 100%);
+  color: white;
+  transform: rotateY(180deg);
+}
+
+/* Quiz */
+.quiz-option {
+  transition: all 0.3s ease;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  font-weight: 500;
+}
+
+.quiz-option:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.quiz-option.correct {
+  background: linear-gradient(135deg, rgb(var(--correct-color-start)) 0%, rgb(var(--correct-color-end)) 100%);
+  color: white;
+  transform: scale(1.02);
+}
+
+.quiz-option.incorrect {
+  background: linear-gradient(135deg, rgb(var(--incorrect-color-start)) 0%, rgb(var(--incorrect-color-end)) 100%);
+  color: white;
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 25px;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, rgb(var(--primary-color-start)) 0%, rgb(var(--primary-color-end)) 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
